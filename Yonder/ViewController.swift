@@ -11,6 +11,7 @@ import CoreLocation
 
 var currentLat: Double = 0.0
 var currentLon: Double = 0.0
+var currentDir: String = "ND"
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
@@ -28,6 +29,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingHeading()
         locationManager.startUpdatingLocation()
     }
 
@@ -48,6 +50,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func toFixed(num: Double) -> Double {
         return Double(round(1000*num)/1000)
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        let compassReading = newHeading.magneticHeading
+        let coordNames = ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "N"]
+        var coordIndex: Int = Int(round(compassReading / 45))
+        if (coordIndex < 0) {
+            coordIndex = coordIndex + 8
+        }
+        currentDir = coordNames[coordIndex]
+//        print(coordNames[coordIndex])
     }
 
 }
