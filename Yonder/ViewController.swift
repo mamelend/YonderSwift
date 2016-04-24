@@ -7,12 +7,28 @@
 //
 
 import UIKit
+import CoreLocation
 
-class ViewController: UIViewController {
+var currentLat: Double = 0.0
+var currentLon: Double = 0.0
 
+class ViewController: UIViewController, CLLocationManagerDelegate {
+    var locationManager = CLLocationManager()
+
+    
+    @IBOutlet weak var latLabel: UILabel!
+    @IBOutlet weak var lonLabel: UILabel!
+    
+    @IBAction func waterDrop(sender: AnyObject) {
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +37,17 @@ class ViewController: UIViewController {
     }
 
 
-}
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // Find user location using built-in geolocation
+        let userLocation: CLLocation = locations[0] as CLLocation
+        currentLat = userLocation.coordinate.latitude
+        currentLon = userLocation.coordinate.longitude
+        latLabel.text = "Lat: \(String(toFixed(currentLat)))"
+        lonLabel.text = "Lon: \(String(toFixed(currentLon)))"
+    }
+    
+    func toFixed(num: Double) -> Double {
+        return Double(round(1000*num)/1000)
+    }
 
+}
