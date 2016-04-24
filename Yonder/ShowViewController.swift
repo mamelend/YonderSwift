@@ -10,7 +10,6 @@ import UIKit
 
 class ShowViewController: UIViewController {
 
-    
     @IBOutlet weak var textLabel: UILabel!
     
     override func viewDidLoad() {
@@ -60,8 +59,13 @@ class ShowViewController: UIViewController {
                     }
                     if (jsonResult[counter]["water_source"] != nil) {
                         let waterSource = jsonResult[counter]["water_source"] as! String
-                        print("The nearest \(waterSource) is \(nearestDistance) miles away due \(nearestDirection).")
-                        self.textLabel.text = "The nearest \(waterSource) is \(nearestDistance) miles away due \(nearestDirection)."
+//                        print("The nearest \(waterSource) is \(nearestDistance) miles away due \(nearestDirection).")
+                        
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.textLabel.text = "The nearest water source is a \(waterSource) and is \(nearestDistance) miles away due \(nearestDirection)."
+                        })
+                    
+                    
                     }
                 } catch {print("JSON Serialization Failed!")}
             }
