@@ -18,18 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsK-6l-f0g">
-                                <rect key="frame" x="200" y="189" width="200" height="222"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="222" id="KDz-bq-dZk"/>
-                                    <constraint firstAttribute="width" constant="200" id="Y5G-nY-652"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="water.png"/>
-                                <connections>
-                                    <action selector="waterDrop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QI2-De-Rwb"/>
-                                    <segue destination="24w-kV-zIS" kind="presentation" id="GPQ-xa-7Ut"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tsl-67-V1l">
                                 <rect key="frame" x="20" y="545" width="120" height="35"/>
                                 <constraints>
@@ -50,6 +38,18 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsK-6l-f0g">
+                                <rect key="frame" x="200" y="173" width="200" height="254"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="254" id="F4X-4Z-llu"/>
+                                    <constraint firstAttribute="width" constant="200" id="W85-yb-IbA"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="water.png"/>
+                                <connections>
+                                    <action selector="waterDrop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QI2-De-Rwb"/>
+                                    <segue destination="24w-kV-zIS" kind="presentation" id="GPQ-xa-7Ut"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -119,6 +119,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="water.png" width="379" height="447"/>
+        <image name="water.png" width="379" height="480"/>
     </resources>
 </document>
