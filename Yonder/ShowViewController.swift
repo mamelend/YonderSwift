@@ -62,7 +62,7 @@ class ShowViewController: UIViewController {
 //                        print("The nearest \(waterSource) is \(nearestDistance) miles away due \(nearestDirection).")
                         
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.textLabel.text = "The nearest water source is a \(waterSource) and is \(nearestDistance) miles away due \(nearestDirection)."
+                            self.textLabel.text = "The nearest water source is a \(waterSource) and is \(nearestDistance) miles away due \(nearestDirection). You are currently heading \(currentDir)."
                         })
                     
                     
