@@ -11,7 +11,10 @@ import CoreLocation
 
 var currentLat: Double = 0.0
 var currentLon: Double = 0.0
-var currentDir: String = "ND"
+// Test Location is a remote area in Tanzania, East Africa
+var testLat: Double = -2.513716
+var testLon: Double = 32.699574
+var currentDir: String = "?"
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
@@ -44,8 +47,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let userLocation: CLLocation = locations[0] as CLLocation
         currentLat = userLocation.coordinate.latitude
         currentLon = userLocation.coordinate.longitude
-        latLabel.text = "Lat: \(String(toFixed(currentLat)))"
-        lonLabel.text = "Lon: \(String(toFixed(currentLon)))"
     }
     
     func toFixed(num: Double) -> Double {
@@ -60,7 +61,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             coordIndex = coordIndex + 8
         }
         currentDir = coordNames[coordIndex]
-//        print(coordNames[coordIndex])
     }
 
 }
