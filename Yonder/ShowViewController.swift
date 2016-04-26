@@ -25,13 +25,11 @@ class ShowViewController: UIViewController {
     }
     
     func getNearestWaterSource() {
-        let cLat = 36.97
-        let cLon = 70.15
 
-        let url = NSURL(string: "https://data.waterpointdata.org/resource/gihr-buz6.json?$where=within_circle(location,\(cLat),\(cLon), 1000)".stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
+        let url = NSURL(string: "https://data.waterpointdata.org/resource/gihr-buz6.json?$where=within_circle(location,\(testLat),\(testLon), 5000)".stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
             if let urlContent = data {
-                
+                print(1)
                 do {
                     var counter = 0
                     var nearestDistance: Double = 5000
@@ -59,15 +57,17 @@ class ShowViewController: UIViewController {
                     }
                     if (jsonResult[counter]["water_source"] != nil) {
                         let waterSource = jsonResult[counter]["water_source"] as! String
-//                        print("The nearest \(waterSource) is \(nearestDistance) miles away due \(nearestDirection).")
-                        
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.textLabel.text = "The nearest water source is a \(waterSource) and is \(nearestDistance) miles away due \(nearestDirection). You are currently heading \(currentDir)."
+                            self.textLabel.text = "The nearest water source is a \(waterSource.lowercaseString) and is \(nearestDistance) miles away due \(nearestDirection). You are currently heading \(currentDir)."
                         })
-                    
-                    
+                        
                     }
-                } catch {print("JSON Serialization Failed!")}
+
+                } catch {
+                    print("JSON Serialization Failed.")
+                }
+            } else {
+                self.textLabel.text = "There are no water sources in this area."
             }
         }
         task.resume()
@@ -76,8 +76,8 @@ class ShowViewController: UIViewController {
     func findDistance(lat: Double, lon: Double) -> Double {
         let lat1 = lat
         let lon1 = lon
-        let lat2 = 36.97
-        let lon2 = 70.15
+        let lat2 = testLat
+        let lon2 = testLon
         
         // Radius of the earth in:  1.609344 miles,  6371 km  | var R = (6371 / 1.609344)
         let R = 3958.7558657440545;
@@ -101,12 +101,12 @@ class ShowViewController: UIViewController {
     }
     
     func findDirection(lat: Double, lon: Double) -> String {
-        let x1 = lat
-        let y1 = lon
-        let x2 = 36.97
-        let y2 = 70.15
+        let lat1 = lat
+        let lon1 = lon
+        let lat2 = testLat
+        let lon2 = testLon
     
-        let radians = getAtan2((y1 - y2), x: (x1 - x2))
+        let radians = getAtan2((lon1 - lon2), x: (lat1 - lat2))
     
         let compassReading = radians * (180 / M_PI)
     
