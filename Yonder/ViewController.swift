@@ -11,6 +11,7 @@ import CoreLocation
 
 var currentLat: Double = 0.0
 var currentLon: Double = 0.0
+
 // Test Location is a remote area in Tanzania, East Africa
 var testLat: Double = -2.513716
 var testLon: Double = 32.699574
@@ -19,7 +20,6 @@ var currentDir: String = "?"
 class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
 
-    
     @IBOutlet weak var latLabel: UILabel!
     @IBOutlet weak var lonLabel: UILabel!
     
@@ -32,15 +32,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingHeading()
         locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // Find user location using built-in geolocation
@@ -55,6 +49,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         let compassReading = newHeading.magneticHeading
+        
         let coordNames = ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "N"]
         var coordIndex: Int = Int(round(compassReading / 45))
         if (coordIndex < 0) {
