@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import CoreLocation
 
-class ShowViewController: UIViewController {
-
+class WaterViewController: UIViewController, CLLocationManagerDelegate {
+    
+    var locationManager = CLLocationManager()
+    var lastDir: String = "?"
+    var lastPoint = (x: 0.0, y: 0.0)
+    
     @IBOutlet weak var textLabel: UILabel!
     
     override func viewDidLoad() {
@@ -17,7 +22,10 @@ class ShowViewController: UIViewController {
         textLabel.numberOfLines = 0
         textLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
         getNearestWaterSource()
-        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingHeading()
     }
     
     override func didReceiveMemoryWarning() {
@@ -25,18 +33,23 @@ class ShowViewController: UIViewController {
     }
     
     func getNearestWaterSource() {
-
-        let url = NSURL(string: "https://data.waterpointdata.org/resource/gihr-buz6.json?$where=within_circle(location,\(testLat),\(testLon), 5000)".stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
+        print("getNearestWaterSource Hit")
+        
+        let url = NSURL(string: "https://data.waterpointdata.org/resource/gihr-buz6.json?$where=within_circle(location,\(currentLat),\(currentLon), 5000)".stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
-            if let urlContent = data {
-                print(1)
+            
+            if data?.length > 5 {
+                let urlContent = data
+                print("JSON Data Available")
                 do {
                     var counter = 0
                     var nearestDistance: Double = 5000
                     var nearestDirection = ""
-                    let jsonResult = try NSJSONSerialization.JSONObjectWithData(urlContent, options: NSJSONReadingOptions.MutableContainers)
+                    let jsonResult = try NSJSONSerialization.JSONObjectWithData(urlContent!, options: NSJSONReadingOptions.MutableContainers) as! NSArray
+                    print(jsonResult)
 
                     for x in 0 ..< jsonResult.count {
+                        // Iterate through json data and determine nearest water point and save nearest distance
                         var lat = ""
                         var lon = ""
                         if (jsonResult[x]["lat_deg"] != nil) {
@@ -49,25 +62,32 @@ class ShowViewController: UIViewController {
                             if (self.findDistance(Double(lat)!, lon: Double(lon)!) < nearestDistance) {
                                 nearestDistance = self.findDistance(Double(lat)!, lon: Double(lon)!)
                                 nearestDirection = self.findDirection(Double(lat)!, lon: Double(lon)!)
+                                self.lastPoint.x = Double(lat)!
+                                self.lastPoint.y = Double(lon)!
                                 counter = x
                             }
                             
                         }
 
                     }
-                    if (jsonResult[counter]["water_source"] != nil) {
+                    
+                    if (!jsonResult.isEqualToArray([])) {
+                        
                         let waterSource = jsonResult[counter]["water_source"] as! String
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.textLabel.text = "The nearest water source is a \(waterSource.lowercaseString) and is \(nearestDistance) miles away due \(nearestDirection). You are currently heading \(currentDir)."
+                            self.lastDir = currentDir
                         })
-                        
                     }
 
                 } catch {
+                    
                     print("JSON Serialization Failed.")
                 }
             } else {
-                self.textLabel.text = "There are no water sources in this area."
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.textLabel.text = "There are no water sources in this area."
+                })
             }
         }
         task.resume()
@@ -76,8 +96,8 @@ class ShowViewController: UIViewController {
     func findDistance(lat: Double, lon: Double) -> Double {
         let lat1 = lat
         let lon1 = lon
-        let lat2 = testLat
-        let lon2 = testLon
+        let lat2 = currentLat
+        let lon2 = currentLon
         
         // Radius of the earth in:  1.609344 miles,  6371 km  | var R = (6371 / 1.609344)
         let R = 3958.7558657440545;
@@ -103,8 +123,8 @@ class ShowViewController: UIViewController {
     func findDirection(lat: Double, lon: Double) -> String {
         let lat1 = lat
         let lon1 = lon
-        let lat2 = testLat
-        let lon2 = testLon
+        let lat2 = currentLat
+        let lon2 = currentLon
     
         let radians = getAtan2((lon1 - lon2), x: (lat1 - lat2))
     
@@ -121,6 +141,12 @@ class ShowViewController: UIViewController {
     
     func getAtan2(y: Double, x: Double) -> Double {
         return atan2(y, x)
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        if(lastDir != currentDir && findDistance(currentLat, lon: currentLon) != findDistance(lastPoint.x, lon: lastPoint.y)) {
+            getNearestWaterSource()
+        }
     }
     
 }

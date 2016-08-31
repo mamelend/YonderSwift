@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2663C17A1CCC1AA8000BDC7A /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = 2663C1791CCC1AA8000BDC7A /* water.png */; };
 		2663C17C1CCC24E4000BDC7A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2663C17B1CCC24E4000BDC7A /* CoreLocation.framework */; };
-		2663C1801CCC309E000BDC7A /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2663C17F1CCC309E000BDC7A /* ShowViewController.swift */; };
+		2663C1801CCC309E000BDC7A /* WaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2663C17F1CCC309E000BDC7A /* WaterViewController.swift */; };
 		26F46AD91CCC17ED009826CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F46AD81CCC17ED009826CF /* AppDelegate.swift */; };
 		26F46ADB1CCC17ED009826CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F46ADA1CCC17ED009826CF /* ViewController.swift */; };
 		26F46ADE1CCC17ED009826CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26F46ADC1CCC17ED009826CF /* Main.storyboard */; };
@@ -20,7 +20,7 @@
 /* Begin PBXFileReference section */
 		2663C1791CCC1AA8000BDC7A /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
 		2663C17B1CCC24E4000BDC7A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		2663C17F1CCC309E000BDC7A /* ShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
+		2663C17F1CCC309E000BDC7A /* WaterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaterViewController.swift; sourceTree = "<group>"; };
 		26F46AD51CCC17ED009826CF /* Yonder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yonder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26F46AD81CCC17ED009826CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26F46ADA1CCC17ED009826CF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 			children = (
 				26F46AD81CCC17ED009826CF /* AppDelegate.swift */,
 				26F46ADA1CCC17ED009826CF /* ViewController.swift */,
-				2663C17F1CCC309E000BDC7A /* ShowViewController.swift */,
+				2663C17F1CCC309E000BDC7A /* WaterViewController.swift */,
 				26F46ADC1CCC17ED009826CF /* Main.storyboard */,
 				26F46ADF1CCC17ED009826CF /* Assets.xcassets */,
 				26F46AE11CCC17ED009826CF /* LaunchScreen.storyboard */,
@@ -106,7 +106,7 @@
 				TargetAttributes = {
 					26F46AD41CCC17ED009826CF = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = 6MNZPDBHKE;
+						DevelopmentTeam = T8F7F3ATWM;
 					};
 				};
 			};
@@ -149,7 +149,7 @@
 			files = (
 				26F46ADB1CCC17ED009826CF /* ViewController.swift in Sources */,
 				26F46AD91CCC17ED009826CF /* AppDelegate.swift in Sources */,
-				2663C1801CCC309E000BDC7A /* ShowViewController.swift in Sources */,
+				2663C1801CCC309E000BDC7A /* WaterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,9 +264,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Yonder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = miguelmelendezcalero.Yonder;
+				PRODUCT_BUNDLE_IDENTIFIER = miguelmelendez.Yonder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -275,9 +276,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Yonder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = miguelmelendezcalero.Yonder;
+				PRODUCT_BUNDLE_IDENTIFIER = miguelmelendez.Yonder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
